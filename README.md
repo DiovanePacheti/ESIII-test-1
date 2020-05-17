@@ -7,6 +7,10 @@ Teste - JS/Node/Express
 * NodeJS
 * Npm (ou Yarn)
 
+## CircleCi
+
+[![CircleCI](https://circleci.com/gh/circleci/circleci-docs.svg?style=svg)](https://circleci.com/gh/circleci/circleci-docs)
+
 ## Preparação ❗️
 1️⃣ Certifique-se de que esteja logado no github
 
