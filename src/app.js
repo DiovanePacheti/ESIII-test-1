@@ -24,24 +24,17 @@ app.post('/products', (request, response) => {
   	const {code, description, buyPrice, sellPrice,tags}= request.body;
 
   	const productsLoversExist = products.find(element => element.code == code);
-  	let lovers;
+  	
+    const lov = (productsLoversExist)?productsLoversExist.lovers: 0;
 
-  	if(productsLoversExist == undefined){
-
-  		lovers = 0
-  	}else{
-  		lovers = productsLoversExist.lovers; 
-  	} 
-
-  	const id = uuid();
-  	let cadastraProduto = {
-  		id,
+  	const cadastraProduto = {
+  		id: uuid(), //gerando id direto no objeto
   		code,
   		description,
   		buyPrice,
   		sellPrice,
   		tags,
-  		lovers
+  		lovers: lov
   		
   	}
   
@@ -63,8 +56,13 @@ app.put('/products/:id', (request, response) => {
   if(!updateProducts){
   	return response.status(400).json({error:"usuario nao encontrado id incorreto !"})
   }
- // console.log(updateProducts)
+
+  updateProducts.code = code;
   updateProducts.description = description;
+  updateProducts.buyPrice = buyPrice;
+  updateProducts.sellPrice = sellPrice;
+  updateProducts.tags = tags;
+
   return response.status(200).json(updateProducts)
 });
 
@@ -76,12 +74,12 @@ app.delete('/products/:code', (request, response) => {
 
   if(productsDelete == -1){
   	return response.status(400).json({error:"produto nao deletado"})
+  }else{
+  
+      products = products.filter(element => element.code !== code)
+
+      return response.status(204).json(products) 
   }
-  products.splice(productsDelete);//removendo o produto encontrado 
-
-
-  return response.status(204).json(products) 
-
 
 });
 
@@ -92,11 +90,14 @@ app.post('/products/:code/love', (request, response) => {
 
   // const [result] = products.filter(element => (element.code == code)).map(element => (element.lovers += 1));
   let result = products.find(element => element.code == code)
-  if(result){
-	  result.lovers += 1;
+  if(!result){
+    return response.status(400).send();
+  }else{
+
+    products.filter(element => element.code == code).map(element => element.lovers += 1)
   	  return response.status(201).json(result);	
-  }	  
-  console.log(products)
+  }	 
+
 });
 
 app.get('/products/:code', (request, response) => {
