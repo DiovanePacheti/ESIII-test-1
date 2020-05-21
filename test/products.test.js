@@ -64,7 +64,7 @@ test('não deve ser possível atualizar um produto inexistente', async () => {
 
 test('não deve ser possível remover um produto inexistente', async () => {
   await request(app)
-    .put('/products/999999')
+    .delete('/products/999999')
     .expect(400);
 });
 
