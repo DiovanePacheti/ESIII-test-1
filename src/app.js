@@ -3,7 +3,8 @@
 /* eslint-disable no-return-assign */
 import express from 'express';
 import cors from 'cors';
-import { uuid } from 'uuidv4';
+import Product from './models/product'
+//import { uuid } from 'uuidv4';
 
 const app = express();
 
@@ -27,16 +28,8 @@ app.post('/products', (request, response) => {
   	
     const lov = (productsLoversExist)?productsLoversExist.lovers: 0;
 
-  	const cadastraProduto = {
-  		id: uuid(), //gerando id direto no objeto
-  		code,
-  		description,
-  		buyPrice,
-  		sellPrice,
-  		tags,
-  		lovers: lov
-  		
-  	}
+
+  	const cadastraProduto = new Product(code, description, buyPrice, sellPrice, tags, lov);
   
     products.push(cadastraProduto);
 
