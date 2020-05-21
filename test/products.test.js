@@ -3,7 +3,9 @@ import request from 'supertest';
 
 import app from '../src/app';
 
-import Product from '../src/models/product'
+import Product from '../src/models/product';
+
+import Validator from '../src/utils/Validator';
 
 let products;
 
@@ -231,3 +233,35 @@ test('Produtos de mesmo código devem compartilhar os lovers', async () => {
     lovers: 2,
   });
 });
+
+// Teste de Extremidades
+// 3 - 50
+// 2 - Primeiro a ser negado
+// 3 - primeiro permitido
+// 50 - ultimo a ser aceito
+// 51 - Primeiro superior a ser negado
+test('Não deve ser aceita a descrição com 2 caracteres', () =>{
+   
+   expect(() => {
+    Validator.validProduct(new Product(
+    121,
+    'Pl',
+    30.00,
+    50.00,
+    ['tecnologia', 'computador', 'gamer'],
+  ));
+  }).toThrow(new Error('Descrição deve estar entre 3 e 50 caaracteres'));
+});
+
+test('deve ser aceita a descrição com 3 caracteres', () =>{
+   
+    const product = Validator.validProduct(new Product(
+      121,
+      'Pla',
+      30.00,
+      50.00,
+      ['tecnologia', 'computador', 'gamer'],
+    ));
+    expect(product.description).toBe('Pla');
+// tempo do video 35:19
+});//fim teste
