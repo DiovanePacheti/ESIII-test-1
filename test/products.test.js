@@ -3,23 +3,25 @@ import request from 'supertest';
 
 import app from '../src/app';
 
+import Product from '../src/models/product'
+
 let products;
 
 beforeEach(() => {
-  products = [{
-    code: 12,
-    description: 'Placa de vídeo ZT-650',
-    buyPrice: 40.00,
-    sellPrice: 80.00,
-    tags: ['tecnologia', 'computador', 'gamer'],
-  },
-  {
-    code: 99,
-    description: 'Macbook Pro Retina 2020',
-    buyPrice: 4000.00,
-    sellPrice: 6000.00,
-    tags: ['tecnologia', 'macbook', 'apple', 'macOS'],
-  }];
+  products = [new Product(
+    12,
+    'Placa de vídeo ZT-650',
+    40.00,
+    80.00,
+    ['tecnologia', 'computador', 'gamer'],
+  ),
+  new Product(
+    99,
+    'Macbook Pro Retina 2020',
+    4000.00,
+    6000.00,
+    ['tecnologia', 'macbook', 'apple', 'macOS'],
+  )];
 });
 
 test('deve ser possível criar um novo produto', async () => {

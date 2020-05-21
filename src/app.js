@@ -22,14 +22,16 @@ app.get('/products', (request, response) => {
 app.post('/products', (request, response) => {
   // TODO: Salvar produto no array products
   	//desestruturando o objeto
-  	const {code, description, buyPrice, sellPrice,tags}= request.body;
+  	const {
+      code, description, buyPrice, sellPrice,tags,id
+    }= request.body;
 
   	const productsLoversExist = products.find(element => element.code == code);
   	
     const lov = (productsLoversExist)?productsLoversExist.lovers: 0;
 
 
-  	const cadastraProduto = new Product(code, description, buyPrice, sellPrice, tags, lov);
+  	const cadastraProduto = new Product(code, description, buyPrice, sellPrice, tags, lov,id);
   
     products.push(cadastraProduto);
 
