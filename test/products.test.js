@@ -264,4 +264,28 @@ test('deve ser aceita a descrição com 3 caracteres', () =>{
     ));
     expect(product.description).toBe('Pla');
 // tempo do video 35:19
-});//fim teste
+});
+test('Não deve ser aceita a descrição com 51 caracteres', () =>{
+   
+   expect(() => {
+    Validator.validProduct(new Product(
+    121,
+    'Placa de vídeo ZT-650 serie extends 200-xp NVIDIA-S',
+    30.00,
+    50.00,
+    ['tecnologia', 'computador', 'gamer'],
+  ));
+  }).toThrow(new Error('Descrição deve estar entre 3 e 50 caaracteres'));
+});
+test('deve ser aceita a descrição com 50 caracteres', () =>{
+   
+    const product = Validator.validProduct(new Product(
+      121,
+      'Placa de vídeo ZT-650 serie extends 2000-xp NVIDIA',
+      30.00,
+      50.00,
+      ['tecnologia', 'computador', 'gamer'],
+    ));
+    expect(product.description.length).toBe(50);
+// tempo do video 35:19
+});
