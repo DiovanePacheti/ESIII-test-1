@@ -287,5 +287,51 @@ test('deve ser aceita a descrição com 50 caracteres', () =>{
       ['tecnologia', 'computador', 'gamer'],
     ));
     expect(product.description.length).toBe(50);
-// tempo do video 35:19
 });
+
+test('Não de aceitar valor compra superior a valor venda', () =>{
+     
+    expect(() => {
+      Validator.validPrice(new Product(
+        121,
+        'Placa de vídeo ZT-650 serie extends 2000-xp NVIDIA',
+        180.00,
+        100.00,
+        ['tecnologia', 'computador', 'gamer'],
+      ));
+    }).toThrow(new Error('O valor lo de venda nao pode ser menor que compra'));
+});
+
+test('deve aceitar valor de venda maior que de compra',() =>{
+    const product = Validator.validPrice(new Product(
+      121,
+        'Placa de vídeo ZT-650 serie extends 2000-xp NVIDIA',
+        10.00,
+        70.00,
+        ['tecnologia', 'computador', 'gamer'],
+      ));
+      expect(product.sellPrice).toBe(70);
+});
+test('Não deve ser negativo valor de compra',() =>{
+  expect(() => {
+    Validator.validPriceNeg(new Product(
+        121,
+        'Placa de vídeo ZT-650 serie extends 2000-xp NVIDIA',
+        -180.00,
+        100.00,
+        ['tecnologia', 'computador', 'gamer'],
+      ));
+  }).toThrow(new Error('valor de compra oude venda nao pode ser negativo'));
+});
+test('Não deve ser negativo valor de venda',() =>{
+  expect(() => {
+    Validator.validPriceNeg(new Product(
+        121,
+        'Placa de vídeo ZT-650 serie extends 2000-xp NVIDIA',
+         10.00,
+        -100.00,
+        ['tecnologia', 'computador', 'gamer'],
+      ));
+  }).toThrow(new Error('valor de compra oude venda nao pode ser negativo'));
+});
+
